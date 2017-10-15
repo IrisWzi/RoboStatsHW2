@@ -1,7 +1,8 @@
 import numpy as np 
-
+import matplotlib.pyplot as plt
 
 #make prediction:
+# TODO NIMA: Fill this in!
 def multi_perceptron_predict(x_t, W_t):
     '''
     Multi-class perceptron prediction
@@ -15,12 +16,16 @@ def multi_perceptron_predict(x_t, W_t):
     '''
 
     #implement the prediction procedure:
-    hat_y = 0 #replace this line with your implemention 
+
+    classWeights = np.dot(W_t, x_t)
+    maxClassValue = max(classWeights)
+    hat_y = list(classWeights).index(maxClassValue)
 
     return hat_y
 
 
 #update Weight matrix:
+# TODO: Fill this in!
 def multi_perceptron_update(x_t, y_t, W_t):
     '''
     Multi-class perceptron update procedure:
@@ -33,10 +38,12 @@ def multi_perceptron_update(x_t, y_t, W_t):
     Output:
             W_tp1: the updated weighted matrix W_{t+1}.
     '''
-   
+
     #implement the update rule to compute W_{t+1}:    
     W_tp1 = W_t    #replace this line with your implementation
-
+    hat_y = multi_perceptron_predict(x_t, W_t)
+    W_tp1[y_t] = (W_tp1[y_t]  + x_t)
+    W_tp1[hat_y] = (W_tp1[hat_y]  - x_t)
 
     return W_tp1
 
@@ -105,11 +112,7 @@ if __name__ == "__main__":
     '''
 
     #plot code:
-    
-    
-
-
-
-
-
-
+    plt.plot(M)
+    plt.ylabel("Average # of Mistakes")
+    plt.xlabel("Time")
+    plt.show()
